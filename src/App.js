@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import UserPage from './compo/UserPage';
+
 
 function App() {
+  const [showUserPage, setShowUserPage] = useState(false);
+  const [userName,setUserName]=useState('');
+  const [password,setPassword]=useState('');
+  const callUserPage = () => {
+    console.log(userName, password);
+    
+    if(userName !=="" && password !==""){
+      setShowUserPage(true);
+    }else{
+      alert("please enter username & password")
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!showUserPage && <div>
+       <div className="ui input"> <input type="text" placeholder="Username" onChange={(e)=>setUserName(e.target.value)}/> </div><br /><br />
+       <div className="ui input"> <input type="password" placeholder="Pwd" onChange={(e)=>setPassword(e.target.value)} /></div><br /><br />
+        <button onClick={callUserPage} className="ui primary button">Login</button> <button className="ui primary button">Register</button>
+      </div>
+      }
+      {showUserPage &&
+
+        <UserPage loginUser={userName}/>
+
+      }
     </div>
   );
+
 }
 
 export default App;
